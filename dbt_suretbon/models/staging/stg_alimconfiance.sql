@@ -19,4 +19,4 @@ select
   trim(com_name) as com_name,
   trim(com_code) as com_code
 from
-  `algebraic-link-440513-f9.raw.alimconfiance_parquet` ac
+  `algebraic-link-440513-f9.raw.export_alimconfiance` ac
