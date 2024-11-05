@@ -22,4 +22,4 @@ select
   trim(facebook) as facebook,
   meta_geo_point as meta_geo_point
  from
-  `algebraic-link-440513-f9.raw.france_food_parquet`
+  `algebraic-link-440513-f9.raw.osm-france-food-service`
