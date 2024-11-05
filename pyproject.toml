@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "airflow-suretbon"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "3.9.20"
+numpy = "1.21.0"
+pandas = "^1.4.2"
+dbt-core = "^1.8.8"
+dbt-bigquery = "^1.8.3"
+apache-airflow = "*"
+psycopg2-binary = "^2.9.10"
+wtforms = "3.1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
