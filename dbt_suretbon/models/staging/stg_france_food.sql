@@ -1,4 +1,4 @@
-select distinct
+select
   trim(name) as name,
   trim(type) as type,
   trim(operator) as operator,
@@ -12,7 +12,7 @@ select distinct
   trim(takeaway) as takeaway,
   trim(drive_through) as drive_through,
   trim(internet_access) as internet_access,
-  trim(capacity) as capacity,
+  capacity,
   safe_cast(stars as float64) as stars,
   trim(smoking) as smoking,
   trim(wikidata) as wikidata,
@@ -20,6 +20,6 @@ select distinct
   trim(phone) as phone,
   trim(website) as website,
   trim(facebook) as facebook,
-  trim(meta_geo_point) as meta_geo_point
+  meta_geo_point as meta_geo_point
  from
-  `algebraic-link-440513-f9.airbytes_raw.france_food`
+  `algebraic-link-440513-f9.raw.france_food_parquet`
