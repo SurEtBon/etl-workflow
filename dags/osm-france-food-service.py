@@ -5,18 +5,9 @@ from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQue
 from airflow.providers.google.cloud.hooks.gcs import GCSHook
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.models import Variable
-from datetime import datetime, timedelta
+from datetime import datetime
 import requests
 import os
-
-default_args = {
-    'owner': 'airflow',
-    'depends_on_past': False,
-    'email_on_failure': False,
-    'email_on_retry': False,
-    'retries': 1,
-    'retry_delay': timedelta(minutes=5),
-}
 
 def download_and_upload_to_gcs(**context):
     date_str = context['execution_date'].strftime('%Y-%m-%d')
@@ -40,12 +31,12 @@ def download_and_upload_to_gcs(**context):
     context['task_instance'].xcom_push(key='filename', value=gcs_destination)
 
 with DAG(
-    'osm_food_service_etl',
-    default_args=default_args,
-    description='ETL for OSM Food Service data',
-    schedule_interval='0 6 * * 1',
-    start_date=datetime(2024, 1, 1),
-    catchup=False
+    "osm_food_service_etl",
+    default_args = {"depends_on_past": True},
+    description = "ETL for OSM Food Service data",
+    schedule_interval = "0 2 * * 1",
+    start_date = datetime(2024, 11, 11),
+    catchup = False
 ) as dag:
 
     download_task = PythonOperator(
@@ -142,7 +133,7 @@ with DAG(
     trigger_dbt = TriggerDagRunOperator(
         task_id='trigger_dbt',
         trigger_dag_id='dbt',
-        dag=dag,
+        dag=dag
     )
 
     download_task >> load_to_temp >> load_to_bq >> trigger_dbt
