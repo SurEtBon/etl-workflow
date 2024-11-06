@@ -15,7 +15,6 @@ dbt-bigquery = "^1.8.3"
 apache-airflow = {version = "2.10.2", extras = ["google"]}
 psycopg2-binary = "^2.9.10"
 wtforms = "3.1.2"
-shapely = "^2.0.6"
 
 
 [build-system]
