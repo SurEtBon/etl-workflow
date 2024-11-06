@@ -17,7 +17,7 @@ services:
         restart: always
     scheduler:
         build: .
-        command: poetry run airflow scheduler
+        command: poetry run /app/airflow/scheduler_entrypoint.sh
         restart: always
         depends_on:
             - postgres
