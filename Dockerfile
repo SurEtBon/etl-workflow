@@ -16,6 +16,9 @@ ENV DBT_VERSION=1.8.8
 
 WORKDIR $AIRFLOW_HOME
 
+COPY ./scheduler_entrypoint.sh ./scheduler_entrypoint.sh
+RUN chmod +x ./scheduler_entrypoint.sh
+
 COPY ./entrypoint.sh ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
