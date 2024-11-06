@@ -21,7 +21,8 @@ select
   ac.date_inspection,
   ac.reg_name,
   ac.dep_name,
-  ac.com_name
+  ac.com_name,
+  ac.full_address
 from
   {{ ref('int_alimconfiance') }} ac
 join
