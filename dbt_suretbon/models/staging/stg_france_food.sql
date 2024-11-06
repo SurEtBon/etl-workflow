@@ -20,6 +20,7 @@ select
   trim(phone) as phone,
   trim(website) as website,
   trim(facebook) as facebook,
-  meta_geo_point as meta_geo_point
+  meta_geo_point as meta_geo_point,
+  safe_cast(meta_osm_id as int64) as meta_osm_id
  from
   `algebraic-link-440513-f9.raw.osm-france-food-service`

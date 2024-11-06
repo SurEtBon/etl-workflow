@@ -13,7 +13,15 @@ select
   ff.type,
   ff.stars,
   ac.synthese_eval_sanit,
-  ac.app_code_synthese_eval_sanit
+  ac.app_code_synthese_eval_sanit,
+  ff.meta_osm_id,
+  ac.adresse_2_ua,
+  ac.code_postal,
+  ac.libelle_commune,
+  ac.date_inspection,
+  ac.reg_name,
+  ac.dep_name,
+  ac.com_name
 from
   {{ ref('int_alimconfiance') }} ac
 join
