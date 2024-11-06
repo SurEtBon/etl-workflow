@@ -19,4 +19,4 @@ from
 join
   {{ ref('int_france_food') }} ff
 on
-  ST_DWithin(ac.geores, ff.meta_geo_point, 10)
+  ST_DWithin(ac.geores, ff.meta_geo_point, 30)
