@@ -1,0 +1,111 @@
+version: 2
+
+models:
+  - name: stg_alimconfiance
+    tests:
+      - dbt_expectations.expect_table_row_count_to_be_between:
+          min_value: 40000
+    description: "Modèle de données des établissements avec informations d'inspection et de localisation."
+    columns:
+      - name: app_libelle_etablissement
+        description: "Libellé de l'établissement, comme le nom ou la raison sociale."
+      - name: siret
+        description: "Numéro SIRET de l'établissement, identifiant unique en France."
+      - name: adresse_2_ua
+        description: "Adresse complémentaire de l'établissement."
+      - name: code_postal
+        description: "Code postal de l'établissement."
+        tests:
+          - dbt_expectations.expect_column_value_lengths_to_equal:
+              value: 5
+      - name: libelle_commune
+        description: "Libellé de la commune où se situe l'établissement."
+      - name: date_inspection
+        description: "Date de la dernière inspection de l'établissement."
+      - name: app_libelle_activite_etablissement
+        description: "Libellé de l'activité principale de l'établissement."
+      - name: synthese_eval_sanit
+        description: "Résultat de l’évaluation sanitaire de l'établissement."
+      - name: app_code_synthese_eval_sanit
+        description: "Code numérique de l'évaluation sanitaire."
+        tests:
+            - dbt_expectations.expect_column_values_to_be_between:
+                min_value: 1
+                max_value: 5
+      - name: agrement
+        description: "Numéro d'agrément de l'établissement."
+      - name: geores
+        description: "Information géographique (géoréférencement)."
+        tests:
+        - dbt_expectations.expect_column_values_to_be_of_type:
+            column_type: geography
+      - name: filtre
+        description: "Code de filtre appliqué."
+      - name: ods_type_activite
+        description: "Type d'activité enregistré."
+      - name: reg_name
+        description: "Nom de la région."
+      - name: reg_code
+        description: "Code de la région."
+      - name: dep_name
+        description: "Nom du département."
+      - name: dep_code
+        description: "Code du département."
+
+  - name: stg_france_food
+    description: "Modèle de données pour les établissements avec informations générales, accessibilité et coordonnées."
+    tests:
+    - dbt_expectations.expect_table_row_count_to_be_between:
+        min_value: 100000
+    columns:
+      - name: name
+        description: "Nom de l'établissement."
+      - name: type
+        description: "Type d'établissement (ex. restaurant, hôtel)."
+      - name: operator
+        description: "Opérateur ou exploitant de l'établissement."
+      - name: brand
+        description: "Marque de l'établissement, si applicable."
+      - name: cuisine
+        description: "Type de cuisine proposée (ex. italienne, française)."
+      - name: vegetarian
+        description: "Indique si des options végétariennes sont disponibles."
+      - name: vegan
+        description: "Indique si des options véganes sont disponibles."
+      - name: opening_hours
+        description: "Horaires d'ouverture de l'établissement (format libre)."
+      - name: wheelchair
+        description: "Indique l'accessibilité en fauteuil roulant."
+      - name: delivery
+        description: "Indique si la livraison est disponible."
+      - name: takeaway
+        description: "Indique si le service à emporter est disponible."
+      - name: drive_through
+        description: "Indique si un service au volant est disponible."
+      - name: internet_access
+        description: "Indique si un accès Internet est disponible pour les clients."
+      - name: capacity
+        description: "Capacité d'accueil de l'établissement."
+      - name: stars
+        description: "Évaluation en nombre d'étoiles."
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              max_value: 5
+      - name: smoking
+        description: "Indique si le tabac est autorisé."
+      - name: wikidata
+        description: "Identifiant Wikidata de l'établissement."
+      - name: siret
+        description: "Numéro SIRET de l'établissement, identifiant unique en France."
+      - name: phone
+        description: "Numéro de téléphone de l'établissement."
+      - name: website
+        description: "Site web de l'établissement."
+      - name: facebook
+        description: "Page Facebook de l'établissement."
+      - name: meta_geo_point
+        description: "Coordonnées géographiques (point géospatial)."
+        tests:
+        - dbt_expectations.expect_column_values_to_be_of_type:
+            column_type: geography
