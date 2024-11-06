@@ -2,6 +2,7 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQueryOperator
 from airflow.providers.google.cloud.hooks.gcs import GCSHook
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 from airflow.models import Variable
 from datetime import datetime, timedelta
 import requests
@@ -63,4 +64,10 @@ with DAG(
         gcp_conn_id='google_cloud',
     )
 
-    download_task >> load_to_bq
+    trigger_dbt = TriggerDagRunOperator(
+        task_id='trigger_dbt',
+        trigger_dag_id='dbt',
+        dag=dag,
+    )
+
+    download_task >> load_to_bq >> trigger_dbt
