@@ -29,8 +29,19 @@ matching_restaurants as (
 )
 
 select
-  * except(row_num)
+  ma.* except(row_num),
+  google.google_rating,
+  google.google_nb_rating,
+  google.google_display_name,
+  tripadvisor.tripadvisor_rating,
+  tripadvisor.tripadvisor_nb_rating
 from
-  matching_restaurants
+  matching_restaurants ma
+left join
+  {{ ref('stg_google_ratings') }} google
+  on google.meta_osm_id = ma.meta_osm_id
+left join
+  {{ ref('stg_tripadvisor_ratings') }} tripadvisor
+  on tripadvisor.meta_osm_id = ma.meta_osm_id
 where
   row_num = 1
