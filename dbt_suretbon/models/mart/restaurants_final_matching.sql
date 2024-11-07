@@ -31,8 +31,10 @@ matching_restaurants as (
 select
   ma.* except(row_num),
   google.google_rating,
+  google.google_nb_rating,
   google.google_display_name,
-  tripadvisor.tripadvisor_rating
+  tripadvisor.tripadvisor_rating,
+  tripadvisor.tripadvisor_nb_rating
 from
   matching_restaurants ma
 left join
