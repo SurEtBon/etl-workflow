@@ -13,6 +13,8 @@ import time
 
 from airflow.operators.python import PythonOperator
 
+from airflow.operators.trigger_dagrun import TriggerDagRunOperator
+
 def create_table_if_not_exists():
     bq = BigQueryHook(use_legacy_sql=False, gcp_conn_id="google_cloud")
     bq.create_empty_table(
@@ -175,5 +177,11 @@ with DAG(
         task_id='get_google_details',
         python_callable=get_google_details,
     )
+
+    trigger_dbt = TriggerDagRunOperator(
+        task_id = "trigger_dbt",
+        trigger_dag_id = "dbt",
+        dag = dag
+    )
     
-    get_google_details_task
+    get_google_details_task >> trigger_dbt
