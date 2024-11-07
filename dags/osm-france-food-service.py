@@ -35,7 +35,7 @@ with DAG(
     default_args = {"depends_on_past": True},
     description = "ETL for OSM Food Service data",
     schedule_interval = "0 2 * * 1",
-    start_date = datetime(2024, 11, 11),
+    start_date = datetime(2024, 11, 4),
     catchup = False
 ) as dag:
 
