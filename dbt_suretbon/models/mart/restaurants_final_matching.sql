@@ -32,11 +32,14 @@ select
   ma.* except(row_num),
   google.google_rating,
   google.google_display_name,
-  google.created_at
+  tripadvisor.tripadvisor_rating
 from
   matching_restaurants ma
 left join
   {{ ref('stg_google_ratings') }} google
   on google.meta_osm_id = ma.meta_osm_id
+left join
+  {{ ref('stg_tripadvisor_ratings') }} tripadvisor
+  on tripadvisor.meta_osm_id = ma.meta_osm_id
 where
   row_num = 1
