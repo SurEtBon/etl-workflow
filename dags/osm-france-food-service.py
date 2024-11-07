@@ -11,11 +11,11 @@ import os
 
 def download_and_upload_to_gcs(**context):
     date_str = context['execution_date'].strftime('%Y-%m-%d')
-    filename = f'osm-france-food-service-{date_str}.parquet'
-    gcs_destination = f'bronze/{filename}'
+    filename = f"{date_str}.parquet"
+    gcs_destination = f"bronze/osm-france-food-service/{filename}"
     url = "https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/osm-france-food-service/exports/parquet?lang=fr&timezone=Europe%2FBerlin"
     response = requests.get(url)
-    temp_path = f"/tmp/{filename}"
+    temp_path = f"/tmp/osm-france-food-service-{filename}"
     with open(temp_path, 'wb') as f:
         f.write(response.content)
     

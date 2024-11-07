@@ -10,17 +10,17 @@ import os
 
 def download_and_upload_to_gcs(**context):
     date_str = context['execution_date'].strftime('%Y-%m-%d')
-    filename = f'export_alimconfiance-{date_str}.parquet'
-    gcs_destination = f'bronze/{filename}'
+    filename = f"{date_str}.parquet"
+    gcs_destination = f"bronze/export_alimconfiance/{filename}"
     url = "https://dgal.opendatasoft.com/api/explore/v2.1/catalog/datasets/export_alimconfiance/exports/parquet?lang=fr&timezone=Europe%2FBerlin"
     
     response = requests.get(url)
-    temp_path = f"/tmp/{filename}"
-    with open(temp_path, 'wb') as f:
+    temp_path = f"/tmp/export_alimconfiance-{filename}"
+    with open(temp_path, "wb") as f:
         f.write(response.content)
     
-    gcs_hook = GCSHook(gcp_conn_id='google_cloud')
-    bucket_name = Variable.get('gcs_bucket')
+    gcs_hook = GCSHook(gcp_conn_id = "google_cloud")
+    bucket_name = Variable.get("gcs_bucket")
     gcs_hook.upload(
         bucket_name=bucket_name,
         object_name=gcs_destination,
